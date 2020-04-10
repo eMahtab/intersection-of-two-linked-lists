@@ -10,7 +10,7 @@ The linked lists must retain their original structure after the function returns
 You may assume there are no cycles anywhere in the entire linked structure.
 Your code should preferably run in O(n) time and use only O(1) memory.
 
-# Implementation : Brute Force
+# Implementation 1 : Time : O(n+m) , Space : O(n)
 ```java
 /**
  * Definition for singly-linked list.
@@ -27,19 +27,20 @@ public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         if(headA == null || headB == null)
             return null;
-
-        while(headA != null){
-            ListNode listBStart = headB;
-            while(listBStart != null){
-                if(listBStart == headA)
-                    return headA;
-                listBStart = listBStart.next;
-            }
-            headA = headA.next;
+        Set<ListNode> set = new HashSet<>();
+        ListNode current = headA;
+        while(current != null) {
+            set.add(current);
+            current = current.next;
+        }
+        current = headB;
+        while(current != null) {
+            if(set.contains(current))
+                return current;
+            current = current.next;
         }
         return null;
     }
-    
 }
 ```
 
